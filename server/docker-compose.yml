@@ -1,0 +1,51 @@
+services:
+  nestapp:
+    build: ./
+    container_name: nestapp-service
+    ports:
+      - "3000:3000"
+    restart: always
+    networks:
+      - backend-network
+    depends_on:
+      - redis
+      - postgres
+
+  redis:
+    image: redis/redis-stack:latest
+    container_name: redis-service
+    env_file: .env
+    ports:
+      - "${REDIS_PORT}:6379" # Порт для БД
+      - "${REDIS_GUI_PORT}:8001" # Порт для GUI
+    # environment:
+    # #   # Передаем пароль в аргументы запуска Redis Stack
+    #   - REDIS_ARGS=/redis.conf # --requirepass ${REDIS_PASSWORD}
+    volumes:
+      - ./redis/redis-data:/data
+      - ./redis/redis.conf:/redis-stack.conf:ro
+    restart: always
+    networks:
+      - backend-network
+    
+  postgres:
+    image: postgres:17
+    container_name: postgres-service
+    env_file: .env
+    environment:
+      - PGDATA=/var/lib/postgresql/data/pgdata
+    expose:
+      - "5432"
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    restart: always
+    networks:
+      - backend-network
+
+
+networks:
+  backend-network:
+    driver: bridge
+
+volumes:
+  postgres-data:

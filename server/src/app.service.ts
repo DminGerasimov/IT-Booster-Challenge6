@@ -3,9 +3,9 @@ import { TextDto } from './app.text.dto';
 
 @Injectable()
 export class AppService {
-  async createJob(textDto: TextDto) {
+  async createJob(jobId: string | undefined) {
     console.log('Job created');
-    console.log('Sended text:', textDto.text);
+    console.log('Sended text:', jobId);
   }
 
   async checkJob() {

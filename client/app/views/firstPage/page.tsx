@@ -15,8 +15,9 @@ const TextForm = () => {
     setSuccess('');
   
     try {
-      const response = await fetch('/api/send-text', {
+      const response = await fetch('http://localhost:3000/createjob', {
         method: 'POST',
+        mode: 'cors',
         headers: {
           'Content-Type': 'application/json'
         },

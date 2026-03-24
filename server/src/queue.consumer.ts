@@ -1,9 +1,9 @@
-import { OnWorkerEvent, WorkerHost } from "@nestjs/bullmq";
+import { OnWorkerEvent, Processor, WorkerHost } from "@nestjs/bullmq";
 import { Job } from "bullmq";
 import { Injectable } from '@nestjs/common';
 
 
-@Injectable()
+@Processor('pdf-queue')
 export class QueueConsumer extends WorkerHost {
     async process(job: Job) {
         console.log(`Processing job ${job.id} with data:`, job.data);

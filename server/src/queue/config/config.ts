@@ -7,7 +7,7 @@ export default {
   connection: {
     host: 'redis',
     port: 6379,
-    db: 'My Redis Stack Database',
+    // db: 'My Redis Stack Database',
     username: 'admin_user',
     password: 'your_secure_password',
   },

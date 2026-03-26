@@ -4,12 +4,12 @@ const env = dotenv.config().parsed;
 if (!env) throw Error('.env file not exist.');
 
 export default {
-  redis: {
-    host: env.REDIS_HOST,
-    port: env.REDIS_PORT,
-    db: env.REDIS_DB,
-    password: env.REDIS_PASSWORD,
-    user: env.REDIS_USER,
+  connection: {
+    host: 'redis',
+    port: 6379,
+    db: 'My Redis Stack Database',
+    username: 'admin_user',
+    password: 'your_secure_password',
   },
   prefix: 'bull-queue',
   defaultJobOptions: {

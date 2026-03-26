@@ -1,7 +1,8 @@
 import { Body, Controller, Get, Post } from '@nestjs/common';
+
 import { AppService } from './app.service';
 import { TextDto } from './app.text.dto';
-import { QueueService } from './queue.service';
+import { QueueService } from './queue/queue.service';
 
 @Controller()
 export class AppController {
@@ -12,7 +13,7 @@ export class AppController {
 
   @Post('/createjob')
   async createJob(@Body() textDto: TextDto) {
-    const jobId = await this.queueService.addJob({"text": textDto.text})
+    const jobId = await this.queueService.addJob({ text: textDto.text });
     return this.appService.createJob(jobId);
   }
 

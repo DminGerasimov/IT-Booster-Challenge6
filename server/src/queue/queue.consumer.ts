@@ -1,4 +1,6 @@
 import { Job } from 'bullmq';
+import fs from 'fs';
+import PDFDocument from 'pdfkit';
 
 import { OnWorkerEvent, Processor, WorkerHost } from '@nestjs/bullmq';
 
@@ -6,6 +8,13 @@ import { OnWorkerEvent, Processor, WorkerHost } from '@nestjs/bullmq';
 export class QueueConsumer extends WorkerHost {
   async process(job: Job) {
     console.log(`Processing job ${job.id} with data:`, job.data);
+    const doc = new PDFDocument();
+    doc.pipe(fs.createWriteStream(job.id + '.pdf'));
+    doc.text(`Processing job ${job.id} with data: ${job.data}`, {
+      paragraphGap: 4,
+    });
+    doc.text('First Page', { continued: false });
+    doc.end();
   }
 
   onError(error: Error) {

@@ -1,17 +1,13 @@
-import dotenv from 'dotenv';
-
-const env = dotenv.config().parsed;
-if (!env) throw Error('.env file not exist.');
-
 export default {
   connection: {
     host: 'redis',
     port: 6379,
-    // db: 'My Redis Stack Database',
+    db: 0,
     username: 'admin_user',
     password: 'your_secure_password',
   },
   prefix: 'bull-queue',
+  // https://api.docs.bullmq.io/interfaces/v5.DefaultJobOptions.html
   defaultJobOptions: {
     attemps: 3,
     removeOnComplete: false,
@@ -19,5 +15,6 @@ export default {
       type: 'exponential',
       delay: 1000,
     },
+    sizeLimit: 256,
   },
 };

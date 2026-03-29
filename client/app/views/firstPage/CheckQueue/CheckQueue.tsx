@@ -4,13 +4,19 @@ import {
   useState,
 } from 'react';
 
+interface JobInterface {
+    id: number
+    finishedOn: number
+    processedOn: number
+}
+
 const CheckQueue = () => {
-  const [text, setText] = useState('');
+  const [jobs, setJobs] = useState<JobInterface[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
 
-    const check = async () => {
+    const check = async (): Promise<JobInterface[]> => {
         setIsLoading(true);
         setError('');
         setSuccess('');
@@ -26,21 +32,37 @@ const CheckQueue = () => {
         if (!response.ok) {
             throw new Error('Ошибка при проверке очереди');
         }
-        console.log(await response.json())
-        setSuccess('Данные успешно получнеы!');
+        const data = await response.json() as JobInterface[]
+        return data
         } catch (err) {
         setError('Произошла ошибка: ' + (err as Error).message);
+        return []
         } finally {
             setIsLoading(false);
         }
     }
     useEffect(() => {
-        check();
+        const intervalId = setInterval(async () => {
+            const jobs = await check();
+            setJobs(jobs);
+            console.log(jobs)
+          }, 1000);
+
+          return () => {
+            clearInterval(intervalId);
+          };
     },[])
     return (
         <>
             {error && <div>{error}</div>}
             {success && <div>{success}</div>}
+            {!isLoading && <div>{
+            jobs.map((job, index)=>(
+                <div key={index}>
+                    Job #{job.id}. Status: {job.finishedOn ? 'finished.': 'active.'}
+                </div>
+            ))
+            }</div>}
         </>
     );
 }

@@ -11,6 +11,8 @@ export default {
   defaultJobOptions: {
     attemps: 3,
     removeOnComplete: false,
+    // An amount of milliseconds to wait until this job can be processed. 
+    delay: 6000,
     backoff: {
       type: 'exponential',
       delay: 1000,

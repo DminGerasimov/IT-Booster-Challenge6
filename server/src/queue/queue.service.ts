@@ -1,6 +1,7 @@
+import { Queue } from 'bullmq';
+
 import { InjectQueue } from '@nestjs/bullmq';
 import { Injectable } from '@nestjs/common';
-import { Queue } from 'bullmq';
 
 @Injectable()
 export class QueueService {
@@ -9,5 +10,10 @@ export class QueueService {
   async addJob(pdfData: { text: string }) {
     const job = await this.queue.add('pdf-job', pdfData);
     return job.id;
+  }
+
+  async getJobs() {
+    const jobs = await this.queue.getJobs();
+    return jobs ? jobs : undefined;
   }
 }

@@ -1,5 +1,7 @@
 'use client'
 import React, { useState } from 'react';
+
+import CheckQueue from './CheckQueue/CheckQueue';
 import styles from './styles.module.css';
 
 const TextForm = () => {
@@ -37,6 +39,7 @@ const TextForm = () => {
     }
   };
   return (
+    <>
     <form id="text-form" onSubmit={handleSubmitJson} className={styles.textForm}>
       <div id="form-group" className={styles.formGroup}>
         <label id="label" className={styles.label} htmlFor="text-input">Введите текст:</label>
@@ -57,6 +60,8 @@ const TextForm = () => {
         {isLoading ? 'Отправляется...' : 'Отправить текст'}
       </button>
     </form>
+    <CheckQueue />
+    </>
   );
 };
 

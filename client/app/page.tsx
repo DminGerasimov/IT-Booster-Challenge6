@@ -1,5 +1,4 @@
-import Image from "next/image";
-import Link from "next/link";
+import Link from 'next/link';
 
 export default function Home() {
   return (
@@ -8,11 +7,7 @@ export default function Home() {
       <Link
         href={'/views/firstPage'}
         className="p-4 py-1 text-sm text-purple-600 font-semibold rounded-full border border-purple-200 hover:text-white hover:bg-purple-600 hover:border-transparent focus:outline-none focus:ring-2 focus:ring-purple-600 focus:ring-offset-2"
-      >First page</Link>
-      <Link
-        href={'/views/secondPage'}
-        className="p-4 py-1 text-sm text-purple-600 font-semibold rounded-full border border-purple-200 hover:text-white hover:bg-purple-600 hover:border-transparent focus:outline-none focus:ring-2 focus:ring-purple-600 focus:ring-offset-2"
-      >Second page</Link>
+      >Create pdf from text</Link>
       </main>
     </div>
   );

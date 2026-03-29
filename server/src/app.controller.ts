@@ -2,23 +2,18 @@ import { Body, Controller, Get, Post } from '@nestjs/common';
 
 import { AppService } from './app.service';
 import { TextDto } from './app.text.dto';
-import { QueueService } from './queue/queue.service';
 
 @Controller()
 export class AppController {
-  constructor(
-    private readonly appService: AppService,
-    private readonly queueService: QueueService,
-  ) {}
+  constructor(private readonly appService: AppService) {}
 
   @Post('/createjob')
   async createJob(@Body() textDto: TextDto) {
-    const jobId = await this.queueService.addJob({ text: textDto.text });
-    return this.appService.createJob(jobId);
+    return await this.appService.createJob(textDto.text);
   }
 
-  @Get('/checkjob')
-  checkJob() {
-    return this.appService.checkJob();
+  @Get('/checkjobs')
+  async checkJobs() {
+    return await this.appService.checkJobs();
   }
 }

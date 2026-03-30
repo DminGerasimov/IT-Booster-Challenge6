@@ -26,4 +26,4 @@ $ docker compose build --no-cache && docker compose up -d
 $ docker run -it nestapp-serv sh
 $ ls
 ```
-то в корне проекта найдём файлы pdf. Скачивание не реализовано.
+то в корне проекта найдём файлы pdf.

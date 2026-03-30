@@ -46,7 +46,7 @@ const CheckQueue = () => {
             const jobs = await check();
             setJobs(jobs);
             console.log(jobs)
-          }, 1000);
+          }, 3000);
 
           return () => {
             clearInterval(intervalId);
@@ -59,7 +59,11 @@ const CheckQueue = () => {
             {!isLoading && <div>{
             jobs.map((job, index)=>(
                 <div key={index}>
-                    Job #{job.id}. Status: {job.finishedOn ? 'finished.': 'active.'}
+                    Job #{job.id}. Status: {
+                    job.finishedOn 
+                        ? 'finished.'
+                        : 'active.'}
+                    {job.finishedOn && <a href={`http://localhost:3000/download?id=${job.id}`}> Download file.</a>}
                 </div>
             ))
             }</div>}

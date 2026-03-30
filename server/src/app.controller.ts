@@ -6,6 +6,7 @@ import {
   Controller,
   Get,
   Post,
+  Query,
   Res,
   StreamableFile,
 } from '@nestjs/common';
@@ -28,10 +29,15 @@ export class AppController {
   }
 
   @Get('/download')
-  downloadFile(@Res({ passthrough: true }) response: Response): StreamableFile {
-    const file = createReadStream(join(process.cwd(), '1.pdf'));
-    console.log(response.headers);
+  downloadFile(
+    @Res({ passthrough: true }) response: Response,
+    @Query('id') id: string,
+  ): StreamableFile {
+    const file = createReadStream(join(process.cwd(), `${id}.pdf`));
     console.log(process.cwd());
-    return new StreamableFile(file);
+    return new StreamableFile(file, {
+      type: 'application/pdf',
+      disposition: `attachment; filename="${id}.pdf"`,
+    });
   }
 }

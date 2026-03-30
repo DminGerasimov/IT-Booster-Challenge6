@@ -7,7 +7,7 @@ import { Injectable } from '@nestjs/common';
 export class QueueService {
   constructor(@InjectQueue('pdf-queue') private queue: Queue) {}
 
-  async addJob(pdfData: { text: string }) {
+  async addJob(pdfData: string) {
     const job = await this.queue.add('pdf-job', pdfData);
     return job.id;
   }

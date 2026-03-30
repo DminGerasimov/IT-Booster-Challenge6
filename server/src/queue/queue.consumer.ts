@@ -11,11 +11,10 @@ import {
 @Processor('pdf-queue')
 export class QueueConsumer extends WorkerHost {
   async process(job: Job) {
-    console.log(`Processing job ${job.id} with data:`, job.data);
+    console.log(`Processing job ${job.id} with data:`, String(job.data));
     const doc = new PDFDocument();
     doc.pipe(fs.createWriteStream(job.id + '.pdf'));
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
-    doc.text(`Processing job ${job.id} with data: ${job.data.text}`, {
+    doc.text(`Processing job ${job.id} with data: ${job.data}`, {
       paragraphGap: 4,
     });
     doc.text('First Page', { continued: false });

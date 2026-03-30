@@ -4,6 +4,8 @@ import {
   useState,
 } from 'react';
 
+import styles from './styles.module.css';
+
 interface JobInterface {
     id: number
     finishedOn: number
@@ -63,7 +65,7 @@ const CheckQueue = () => {
                     job.finishedOn 
                         ? 'finished.'
                         : 'active.'}
-                    {job.finishedOn && <a href={`http://localhost:3000/download?id=${job.id}`}> Download file.</a>}
+                    {job.finishedOn && <a href={`http://localhost:3000/download?id=${job.id}`} className={styles.link}> Download file.</a>}
                 </div>
             ))
             }</div>}

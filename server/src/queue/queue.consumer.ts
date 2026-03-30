@@ -2,7 +2,11 @@ import { Job } from 'bullmq';
 import fs from 'fs';
 import PDFDocument from 'pdfkit';
 
-import { OnWorkerEvent, Processor, WorkerHost } from '@nestjs/bullmq';
+import {
+  OnWorkerEvent,
+  Processor,
+  WorkerHost,
+} from '@nestjs/bullmq';
 
 @Processor('pdf-queue')
 export class QueueConsumer extends WorkerHost {
@@ -10,7 +14,8 @@ export class QueueConsumer extends WorkerHost {
     console.log(`Processing job ${job.id} with data:`, job.data);
     const doc = new PDFDocument();
     doc.pipe(fs.createWriteStream(job.id + '.pdf'));
-    doc.text(`Processing job ${job.id} with data: ${job.data}`, {
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+    doc.text(`Processing job ${job.id} with data: ${job.data.text}`, {
       paragraphGap: 4,
     });
     doc.text('First Page', { continued: false });
